@@ -25,25 +25,26 @@ public class EmployeeStreamDemo {
         employeeList.add(new Employee(277, "Anuj Chettiar", 31, "Male", "Product Development", 2012, 35700.0));
 
         // 1. no of m & f emp
-        Map<String, Long> genderCountMap = employeeList.stream().
-                collect(Collectors.groupingBy(e -> e.getGender(), Collectors.counting()));
-        System.out.println(genderCountMap);
+        Map<String, Long> noOfMF = employeeList.stream().collect(Collectors.groupingBy(e -> e.getGender(), Collectors.counting()));
+        System.out.println(noOfMF);
 
         // 2 .names of all dept
         List<String> deptList = employeeList.stream().map(e -> e.getDepartment()).distinct().collect(Collectors.toList());
         System.out.println(deptList);
 
         // 3.
-        Map<String, Double> avgAgeMap =employeeList.stream().
-                collect(Collectors.groupingBy(e -> e.getGender(), Collectors.averagingDouble(e -> e.getAge())));
-        System.out.println(avgAgeMap);
+        Map<String, Double> avgAge = employeeList.stream().collect(Collectors.groupingBy(e -> e.getGender(), Collectors.averagingInt(e -> e.getAge())));
+        System.out.println(avgAge);
 
         // 4.
-        Comparator<Employee> comp = (e1,e2) -> (int) (e1.getSalary() - e2.getSalary());
-        Optional<Employee> emp = employeeList.stream().collect(Collectors.maxBy(comp));
-        if(emp.isPresent())
-            System.out.println(emp.get());
+        Comparator<Employee> salComp = (e1, e2) -> (int) (e1.getSalary() - e2.getSalary());
+        Optional<Employee> employeeOptional = employeeList.stream().collect(Collectors.maxBy(salComp));
+        if(employeeOptional.isPresent())
+            System.out.println(employeeOptional.get().getName());
+
+
     }
+
 
 
 
