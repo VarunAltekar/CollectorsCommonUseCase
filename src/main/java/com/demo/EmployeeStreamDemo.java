@@ -42,7 +42,43 @@ public class EmployeeStreamDemo {
         if(employeeOptional.isPresent())
             System.out.println(employeeOptional.get().getName());
 
+        // Query 5 : Get the names of all employees who have joined after 2015?
+        List<String> empYoJ = employeeList.stream().filter(e -> e.getYearOfJoining() > 2015)
+                .map(e -> e.getName()).collect(Collectors.toList());
+        Map<Boolean,List<String>> empPar = employeeList.stream().
+                collect(Collectors.partitioningBy(e -> e.getYearOfJoining() > 2015,
+                        Collectors.mapping(e -> e.getName(),Collectors.toList())));
+        System.out.println("\n"+empYoJ);
+        System.out.println(empPar.get(true));
 
+        // Query 6 : Count the number of employees in each department?
+        Map<String, Long> empDept = employeeList.stream().
+                collect(Collectors.groupingBy(e -> e.getDepartment(), Collectors.counting()));
+        System.out.println(empDept);
+        // Query 7 : What is the average salary of each department?
+        Map<String, Double> empDeptAvg = employeeList.stream().
+                collect(Collectors.groupingBy(e -> e.getDepartment(), Collectors.averagingDouble(e -> e.getSalary())));
+        System.out.println("\n"+ empDeptAvg);
+        // Query 8 : Get the details of youngest male employee in the product
+        // development department?
+        System.out.println("\n");
+        // Query 9 : Who has the most working experience in the organization?
+        System.out.println("\n");
+        // Query 10 : How many male and female employees are there in the sales and
+        // marketing team?
+        System.out.println("\n");
+        // Query 11 : What is the average salary of male and female employees?
+        System.out.println("\n");
+        // Query 12 : List down the names of all employees in each department?
+        System.out.println("\n");
+        // Query 13 : What is the average salary and total salary of the whole
+        // organization?
+        System.out.println("\n");
+        // Query 14 : Separate the employees who are younger or equal to 25 years from
+        // those employees who are older than 25 years.
+        System.out.println("\n");
+        // Query 15 : Who is the oldest employee in the organization? What is his age
+        // and which department he belongs to?
     }
 
 
